@@ -1,5 +1,4 @@
 exports.up = async client => {
-  console.log('ffs')
   await client`CREATE EXTENSION IF NOT EXISTS pgcrypto`;
   await client`drop table IF EXISTS "Company"."Company"`;
   await client`
@@ -16,6 +15,11 @@ exports.up = async client => {
   await client`
       insert into "Company"."Company"("name", "email")
       values ('LLC Demo', 'support@example.com');
+  `;
+
+  await client`
+      create unique index email_unique
+          on "Company"."Company" (email);
   `;
 };
 
